@@ -302,7 +302,7 @@ if st.session_state.get('carteira_calculada', False):
         st.markdown("""
         **Deve mais do que tem?**  
         🟢 Dívidas sob-controle  
-        🟡 Deve menos do que possui... ainda  
+        🟡 Deve menos do que possui... por enquanto...  
         🔴 Dívida maior do que o patrimônio  
         🔴❗ Patrimônio negativado (atenção)  
         ⚪ Informação indisponível  
