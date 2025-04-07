@@ -4,7 +4,7 @@ import fundamentus as fd
 
 def fetch_stock_data(tickers):
     tickers = [i+'.SA' for i in tickers]
-    data = yf.download(tickers)['Close'].dropna()
+    data = yf.download(tickers+['^BVSP'])['Close'].dropna()
     data.columns = data.columns.str.replace(r'\.SA$', '', regex=True)
     
     return data

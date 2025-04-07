@@ -5,6 +5,7 @@ import plotly.graph_objs as go
 from datetime import datetime
 from utils.data_fetcher import fetch_stock_data, fetch_stock_results
 from bcb import sgs
+from arch import arch_model
 
 # Carrega os dados dos tickers a partir de um CSV com informações de nome e setor
 
@@ -104,7 +105,7 @@ selected_stocks = np.unique(selected_stocks)
 selected_sectors = selected_sectors
 
 # Número de simulações do modelo de Monte Carlo
-num_simulations = st.number_input('Número de simulações Monte Carlo:', min_value=500, max_value=10000, value=3000, step=500, help='(i) Aumentar o número de simulações pode aumentar o tempo de cálculo.')
+num_simulations = st.number_input('Número de simulações Monte Carlo:', min_value=500, max_value=10000, value=3000, step=500, help='Aumentar o número de simulações pode aumentar o tempo de cálculo.')
 
 # Define se o cálculo deve ser executado
 recalcular = False
@@ -122,9 +123,14 @@ elif st.session_state.get('carteira_calculada', False):
 # Bloco principal de cálculo e armazenamento dos dados otimizados
 if recalcular:
     data = fetch_stock_data(selected_stocks)  # Coleta dados históricos das ações
-    returns = data.pct_change().dropna()  # Calcula os retornos diários
-    st.session_state['data'] = data  # Salva os dados brutos para uso futuro
-
+    # Separa os dados do índice Ibovespa para comparação visual
+    ibovespa_returns = data['^BVSP'].pct_change().dropna()
+    data = data.drop(columns=['^BVSP'])  # Remove Ibovespa dos cálculos da carteira
+    # Calcula os retornos percentuais diários
+    returns = data.pct_change().dropna()
+    # Armazena os dados brutos para uso posterior (ex: análises por período)
+    st.session_state['data'] = data
+    st.session_state['bvsp'] = ibovespa_returns
     # Executa simulação de Monte Carlo com os retornos obtidos
     monte_carlo_results = monte_carlo_portfolios(returns, n_simulations=num_simulations)
     best_weights = monte_carlo_results.iloc[0]['weights']  # Seleciona a carteira com maior Sharpe
@@ -145,6 +151,8 @@ if recalcular:
 if st.session_state.get('carteira_calculada', False):
     # Recupera os dados brutos salvos
     data = st.session_state['data']
+    
+    ibovespa_returns = st.session_state['bvsp']
 
     # Recalcula os retornos com base nos dados armazenados
     returns = data.pct_change().dropna()
@@ -216,11 +224,14 @@ if st.session_state.get('carteira_calculada', False):
     inflacao = sgs.get({'ipca':13522}, start = str(start_date.date()))
     inflacao = (inflacao.dropna()/12).cumsum()
 
+    ibovespa_returns = ibovespa_returns.loc[str(start_date.date()):]
+
     # Geração do gráfico comparativo da rentabilidade da carteira, SELIC e inflação
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=portfolio_cumulative.index, y=portfolio_cumulative, name='Carteira Otimizada'))
     fig.add_trace(go.Scatter(x=selic.index, y=selic.selic, name='SELIC', opacity=0.6))
     fig.add_trace(go.Scatter(x=inflacao.index, y=inflacao.ipca, name='Inflação', opacity=0.6))
+    fig.add_trace(go.Scatter(x=ibovespa_returns.index, y=((ibovespa_returns + 1).cumprod() - 1) * 100, name='Ibovespa', opacity=0.6, line=dict(color='gray')))
 
     fig.update_layout(
         title='Rentabilidade Acumulada da Carteira Otimizada (%)',
@@ -245,6 +256,27 @@ if st.session_state.get('carteira_calculada', False):
     dy_series = stock_results_df.loc[[selected_company[c] for c in period_returns.columns], 'dy'].astype(float).values
     dy_ponderado = np.sum(selected_weights * dy_series) / len(dy_series)
     st.write(f'Dividend Yield médio da carteira: {np.round(dy_ponderado,2)}%')
+
+
+    # Estima volatilidade condicional usando o modelo GJR-GARCH(1,1,1)
+    portfolio_returns = period_returns @ selected_weights
+    am = arch_model(portfolio_returns * 100, vol='GARCH', p=1, o=1, q=1, dist='normal')
+    res = am.fit(disp='off')
+    conditional_volatility = res.conditional_volatility / 100
+
+    # Gráfico da volatilidade condicional
+    fig_vol = go.Figure()
+    fig_vol.add_trace(go.Scatter(
+        x=portfolio_returns.index, 
+        y=conditional_volatility, 
+        name='Volatilidade (GJR-GARCH)',
+        line=dict(color='orange')
+    ))
+    fig_vol.update_layout(yaxis_title="Volatilidade diária")
+
+    st.markdown("### Volatilidade Condicional da Carteira (GJR-GARCH)")
+    st.info("ℹ️ A volatilidade condicional é calculada usando o modelo GJR-GARCH para capturar mudanças na volatilidade ao longo do tempo, especialmente durante períodos de maior instabilidade no mercado. Valores mais altos indicam períodos de maior risco, enquanto valores menores sugerem períodos de maior estabilidade.")
+    st.plotly_chart(fig_vol)
 
     # Classifica P/VP com emojis de "preço justo"
     pvp_valores = stock_results_df.loc[[selected_company[c] for c in period_returns.columns], 'pvp'].astype(float).values
@@ -299,28 +331,31 @@ if st.session_state.get('carteira_calculada', False):
     st.caption("Legenda:")
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.markdown("""
-        **Deve mais do que tem?**  
-        🟢 Dívidas sob-controle  
+        st.info("""🔹 **Retorna rápido ?**:  
+Usa-se o indicador P/L que mede quantos anos a ação leva para retornar seu investimento com base nos lucros. Comparado à SELIC.
+                
+   ✅ Em menos tempo do que da SELIC  
+        ❌ Leva mais tempo do que SELIC """)
+    with col2:
+        st.info("""🔹 **Está barato?**:                
+Através do indicador P/VP, avalia-se o preço atual do ativo em relação ao valor patrimonial por ação.
+        
+💲 No precinho!  
+        💲💲 Barato mas nem tanto 
+        💲💲💲 Tá caro!  
+        💸 Fuja! 
+""")
+    with col3:
+        st.info("""
+🔹 **Deve muito?**:   
+Dívida Bruta/Patrimônio, onde medimos o nível de endividamento em relação ao patrimônio da empresa.
+        
+🟢 Dívidas sob-controle  
         🟡 Deve menos do que possui... por enquanto...  
         🔴 Dívida maior do que o patrimônio  
         🔴❗ Patrimônio negativado (atenção)  
         ⚪ Informação indisponível  
-        """)
-    with col2:
-        st.markdown("""
-        **Está barato?**  
-        💲 No precinho!  
-        💲💲 Barato mas nem tanto 
-        💲💲💲 Tá caro!  
-        💸 Fuja! 
-        """)
-    with col3:
-        st.markdown("""
-        **Retorna rápido?**  
-        ✅ Em menos tempo do que da SELIC  
-        ❌ Leva mais tempo do que SELIC  
-        """)
+""")
 
     # Prepara os dados e gera gráfico da composição da carteira por setor
     setores = []
