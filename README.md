@@ -2,7 +2,7 @@
 
 Este projeto consiste em uma aplicação interativa desenvolvida com **Python** e **Streamlit**, com o objetivo de auxiliar investidores no estudo e simulação de carteiras de ações do mercado brasileiro. A aplicação utiliza métodos quantitativos avançados para otimizar carteiras e avaliar seu desempenho histórico.
 
-**Link do assistente no Streamlit**: https://basic-b3-stock-assistant.streamlit.app/
+**Use o Assistente direto no Streamlit**: https://basic-b3-stock-assistant.streamlit.app/
 
 ## 🚨 Aviso Importante
 
