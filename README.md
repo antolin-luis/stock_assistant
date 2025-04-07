@@ -2,6 +2,8 @@
 
 Este projeto consiste em uma aplicação interativa desenvolvida com **Python** e **Streamlit**, com o objetivo de auxiliar investidores no estudo e simulação de carteiras de ações do mercado brasileiro. A aplicação utiliza métodos quantitativos avançados para otimizar carteiras e avaliar seu desempenho histórico.
 
+**Link do assistente no Streamlit**: https://basic-b3-stock-assistant.streamlit.app/
+
 ## 🚨 Aviso Importante
 
 **Este projeto possui caráter exclusivamente educacional e não substitui o auxílio de um profissional autorizado na área de investimentos. Utilize-o como ferramenta complementar ao seu estudo pessoal sobre investimentos.**
@@ -58,7 +60,7 @@ A carteira selecionada é complementada com análises fundamentalistas das açõ
 
 ---
 
-## 🚀 Como Utilizar
+## 🚀 Como Utilizar (localmente)
 
 ### Instalação das dependências
 
@@ -122,7 +124,8 @@ Após o cálculo da carteira otimizada, você terá acesso aos seguintes resulta
   ![alt text](graph1.png)
 
 - **Volatilidade condicional (GJR-GARCH)**: Demonstra como o risco da carteira se comportou historicamente, destacando períodos de alta e baixa volatilidade. Períodos com volatilidade elevada indicam momentos de maior incerteza e risco.
-![alt text](garch.png)
+
+  ![alt text](garch.png)
 
 - **Indicadores fundamentalistas**: Fornecem insights adicionais sobre a qualidade das empresas escolhidas:
   - **Dividend Yield**: Retorno médio esperado com dividendos das ações.
@@ -131,6 +134,10 @@ Após o cálculo da carteira otimizada, você terá acesso aos seguintes resulta
   - **P/VP**: Avalia o valor de mercado da empresa em relação ao seu valor patrimonial.
 
   ![alt text](table.png)
+
+- **Composição da carteira por Setor**: Baseado nos ativos selecionados e na proporção calculada da carteira, este gráfico exibe os setores produtivos onde empresas estão stiuadas. Esta é uma informação importante quando pensamos em diversificação dos investimentos.
+
+  ![alt text](sectors_chart.png)
 
 Esses resultados permitem avaliar a qualidade da carteira montada, ajudando na compreensão do equilíbrio risco-retorno e na tomada de decisões mais informadas.
 
