@@ -37,7 +37,7 @@ def monte_carlo_portfolios(returns, n_simulations=3000):
 tickers_df = load_ticker_data()
 tickers_df['display'] = tickers_df['tick'] + ' - ' + tickers_df['stock_name']
 
-st.title('📈 Otimização de Carteira com Monte Carlo')
+st.title('📈 Assistente de otimização de carteira com Monte Carlo')
 
 # Inicialização dos estados da aplicação
 if 'num_stocks' not in st.session_state:
