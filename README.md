@@ -128,10 +128,12 @@ Após o cálculo da carteira otimizada, você terá acesso aos seguintes resulta
   ![alt text](garch.png)
 
 - **Indicadores fundamentalistas**: Fornecem insights adicionais sobre a qualidade das empresas escolhidas:
+  - **Peso**: Qual deve ser a proporção de uma determinada ação dentro da carteira para que se obtenha a relação risco-retorno calculada.
   - **Dividend Yield**: Retorno médio esperado com dividendos das ações.
-  - **Dívida Bruta/Patrimônio**: Indicador do nível de endividamento das empresas.
-  - **P/L**: Indica quanto tempo (em anos) leva para o lucro da empresa cobrir o preço pago pela ação.
-  - **P/VP**: Avalia o valor de mercado da empresa em relação ao seu valor patrimonial.
+  - **P/L**: Indica quanto tempo (em anos) leva para o lucro da empresa cobrir o preço pago pela ação. Representado pela coluna 'Retorna rápido?'.
+  - **P/VP**: Avalia o valor de mercado da empresa em relação ao seu valor patrimonial. Representado pela coluna 'Está barato?'
+  - **Dívida Bruta/Patrimônio**: Indicador do nível de endividamento das empresas. Representado pela coluna 'Deve muito?'.
+
 
   ![alt text](table.png)
 
