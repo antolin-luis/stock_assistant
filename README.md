@@ -12,7 +12,7 @@ Este projeto consiste em uma aplicação interativa desenvolvida com **Python** 
 
 ## 🔍 Metodologia e Funcionamento
 
-Todo o processo de **ETL (Extração, Transformação e Carregamento)** é realizado diretamente no script:
+Todo o processo de **ETL (Extração, Transformação e Carregamento)** é realizado diretamente no script ``app.py``:
 
 - **Extração**: Os dados são coletados através das APIs do **Banco Central (BCB)** e do **Fundamentus**, garantindo informações atualizadas sobre mercado e indicadores financeiros.
 - **Transformação**: Aplicam-se métodos quantitativos avançados como a simulação Monte Carlo e modelos econométricos GJR-GARCH para otimizar e avaliar carteiras.
@@ -20,7 +20,7 @@ Todo o processo de **ETL (Extração, Transformação e Carregamento)** é reali
 
 ### 1. **Seleção das Ações**
 
-O usuário pode selecionar entre **2 a 10 ações** listadas na bolsa brasileira (B3). As ações são escolhidas por meio de uma interface interativa.
+O usuário pode selecionar entre **2 a 12 ações** listadas na bolsa brasileira (B3). As ações são escolhidas por meio de uma interface interativa.
 
 ### 2. **Simulação Monte Carlo**
 
