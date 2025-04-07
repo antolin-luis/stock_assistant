@@ -121,6 +121,8 @@ Após o cálculo da carteira otimizada, você terá acesso aos seguintes resulta
   - **P/L**: Indica quanto tempo (em anos) leva para o lucro da empresa cobrir o preço pago pela ação.
   - **P/VP**: Avalia o valor de mercado da empresa em relação ao seu valor patrimonial.
 
+![alt text](table.png)
+
 Esses resultados permitem avaliar a qualidade da carteira montada, ajudando na compreensão do equilíbrio risco-retorno e na tomada de decisões mais informadas.
 
 ---
