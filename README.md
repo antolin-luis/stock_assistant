@@ -138,5 +138,7 @@ Este projeto está disponível para uso educacional e pessoal, não comercial.
 ---
 
 📩 **Dúvidas ou sugestões? Entre em contato!**
+
 Mail: antolin.luis@gmail.com
+
 LinkedIn: https://www.linkedin.com/in/luis-antolin/
