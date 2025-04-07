@@ -97,16 +97,19 @@ Abra seu navegador e acesse `http://localhost:8501`.
 2. **Escolha o número de simulações** do método de Monte Carlo (padrão: 3000 simulações; máximo: 10000 simulações). Quanto maior o número de simulações, mais preciso tende a ser o resultado, mas o tempo de cálculo será proporcionalmente maior.
 
 3. **Clique em "Calcular Carteira Otimizada"** para gerar a análise.
-![alt text](first_actions.png)
+
+    ![alt text](first_actions.png)
 
 4. Após o cálculo da propoção dos ativos da carteira, use o seletor de período para análisar a relação risco-retorno ao longo do ano atual, também considerando 1 ou 5 anos, e por último a série histórica completa destes ativos.
-![alt text](selector.png)
+
+    ![alt text](selector.png)
 
 5. Use o slider para mudar a proporção dos ativos na carteira conforme o retorno desejado.
   - Nota: por padrão o valor de retorno que aparece no slider após o cálculo da carteira otimizada, é o valor de maior retorno com o menor risco calculado
 
   - **Dica**: ajuste o valor de retorno de modo a minimizar o risco e balancear o peso dos ativos na carteira. Uma carteira de risco baixo e alto retorno, mas com o peso elevado para um único ou poucos ativos, não necessariamente significa ser sustentável no curto prazo.
-![alt text](slider.png)
+
+    ![alt text](slider.png)
 
 ---
 
@@ -116,7 +119,7 @@ Após o cálculo da carteira otimizada, você terá acesso aos seguintes resulta
 
 - **Rentabilidade acumulada da carteira**: Exibe o desempenho histórico da carteira otimizada, comparado à taxa SELIC, à inflação (IPCA) e ao índice Ibovespa, permitindo entender o comportamento relativo dos investimentos ao longo do tempo.
 
-![alt text](graph1.png)
+  ![alt text](graph1.png)
 
 - **Volatilidade condicional (GJR-GARCH)**: Demonstra como o risco da carteira se comportou historicamente, destacando períodos de alta e baixa volatilidade. Períodos com volatilidade elevada indicam momentos de maior incerteza e risco.
 ![alt text](garch.png)
@@ -127,7 +130,7 @@ Após o cálculo da carteira otimizada, você terá acesso aos seguintes resulta
   - **P/L**: Indica quanto tempo (em anos) leva para o lucro da empresa cobrir o preço pago pela ação.
   - **P/VP**: Avalia o valor de mercado da empresa em relação ao seu valor patrimonial.
 
-![alt text](table.png)
+  ![alt text](table.png)
 
 Esses resultados permitem avaliar a qualidade da carteira montada, ajudando na compreensão do equilíbrio risco-retorno e na tomada de decisões mais informadas.
 
