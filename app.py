@@ -7,6 +7,27 @@ from utils.data_fetcher import fetch_stock_data, fetch_stock_results
 from bcb import sgs
 from arch import arch_model
 
+st.set_page_config(
+    page_title="B3 Stocks Assistant",
+    page_icon=":coin:",
+    layout="wide",
+    initial_sidebar_state="auto",
+    menu_items={
+        'Get Help': "https://github.com/antolin-luis/stock_assistant/issues",
+        'Report a bug': "https://github.com/antolin-luis/stock_assistant/issues",
+        'About': """# Assistente para otimização de carteira de investimentos com Monte Carlo
+
+Este projeto consiste em uma aplicação interativa desenvolvida com **Python** e **Streamlit**, com o objetivo de auxiliar investidores no estudo e simulação de carteiras de ações do mercado brasileiro. A aplicação utiliza métodos quantitativos avançados para otimizar carteiras e avaliar seu desempenho histórico.
+
+# 🚨 Aviso Importante
+
+**Este projeto possui caráter exclusivamente educacional e não substitui o auxílio de um profissional autorizado na área de investimentos. Utilize-o como ferramenta complementar ao seu estudo pessoal sobre investimentos.**
+
+        
+        """
+    }
+)
+
 # Carrega os dados dos tickers a partir de um CSV com informações de nome e setor
 
 @st.cache_data
@@ -37,7 +58,12 @@ def monte_carlo_portfolios(returns, n_simulations=3000):
 tickers_df = load_ticker_data()
 tickers_df['display'] = tickers_df['tick'] + ' - ' + tickers_df['stock_name']
 
-st.title('📈 Assistente de otimização de carteira com Monte Carlo')
+st.title('📈 Otimizador de carteiras de ações da B3')
+st.caption("""# 🚨 Aviso Importante
+
+**Este projeto possui caráter exclusivamente educacional e não substitui o auxílio de um profissional autorizado. Utilize-o como informação complementar para a sua tomada de decisão.**
+""")
+
 
 # Inicialização dos estados da aplicação
 if 'num_stocks' not in st.session_state:

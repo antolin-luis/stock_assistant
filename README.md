@@ -1,4 +1,4 @@
-# 📈 Assistente para otimização de carteira de investimentos com Monte Carlo
+# 📈 Otimizador de carteiras de ações da B3 com Monte Carlo
 
 Este projeto consiste em uma aplicação interativa desenvolvida com **Python** e **Streamlit**, com o objetivo de auxiliar investidores no estudo e simulação de carteiras de ações do mercado brasileiro. A aplicação utiliza métodos quantitativos avançados para otimizar carteiras e avaliar seu desempenho histórico.
 
